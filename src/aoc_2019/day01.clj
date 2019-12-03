@@ -5,7 +5,7 @@
   (- (quot x 3) 2))
 
 (defn fuel [x]
-  (apply + (take-while pos? (iterate mass (mass x)))))
+  (apply + (take-while pos? (rest (iterate mass x)))))
 
 (defn part-1 [x]
   (apply + (map #(mass (Integer/parseInt %)) (split-lines x))))
