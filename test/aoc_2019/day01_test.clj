@@ -1,6 +1,5 @@
 (ns aoc-2019.day01-test
   (:require
-    [clojure.core :only [slurp]]
     [clojure.test :refer :all]
     [aoc-2019.day01 :refer :all]))
 
