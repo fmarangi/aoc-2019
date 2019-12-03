@@ -9,4 +9,5 @@
 
 (deftest solve-puzzle
   (let [input (slurp "resources/day02.txt")]
-    (is (= (part-1 input) 3409710))))
+    (is (= (part-1 input) 3409710))
+    (is (= (part-2 input) 7912))))

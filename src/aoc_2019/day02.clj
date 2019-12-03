@@ -19,10 +19,17 @@
       p
       (recur (+ i 4) (intcode p i)))))
 
-(defn part-1
-  ([input] (part-1 input 12 2))
-  ([input noun verb]
-    (let [i (parse-input (trim input))
-          i (assoc i 1 12)
-          i (assoc i 2 2)]
-      ((run-program i) 0))))
+(defn- solver [input]
+  (let [i (parse-input (trim input))]
+    (fn [noun verb]
+      (run-program (assoc i 1 noun 2 verb)))))
+
+(defn part-1 [input]
+  (((solver input) 12 2) 0))
+
+(defn part-2 [input]
+  (let [s (solver input)
+        t #((s (quot % 100) (mod % 100)) 0)]
+    (->> (range 0 9999)
+         (filter #(= (t %) 19690720))
+         first)))
