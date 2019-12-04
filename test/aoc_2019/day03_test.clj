@@ -9,6 +9,19 @@
   (is (= (manhattan [0 0] [-4 -3]) 7))
   (is (= (manhattan [0 0 0] [3 -3 3]) 9)))
 
+(deftest move-to-next
+  (is (= ((move :U) [0 0]) [0 1]))
+  (is (= ((move :L) [0 0]) [-1 0]))
+  (is (= ((move :R) [0 0]) [1 0]))
+  (is (= ((move :D) [0 0]) [0 -1])))
+
+(deftest parse-step
+  (is (= (step "R888") [:R 888])))
+
+(deftest get-path
+  (is (= (vec (path "R3" [0 0])) [[1 0] [2 0] [3 0]]))
+  (is (= (vec (path "D3" [0 0])) [[0 -1] [0 -2] [0 -3]])))
+
 ;(deftest solve-puzzle
 ;  (let [input (slurp "resources/day02.txt")]
 ;    (is (= (part-1 input) 3409710))
