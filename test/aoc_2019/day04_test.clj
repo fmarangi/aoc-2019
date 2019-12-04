@@ -9,9 +9,8 @@
   (is (= (password? 122345) true))
   (is (= (password? 223450) false))
   (is (= (password? 123789) false)))
-  (is (= (count (filter true? (map password? (range 137683 (inc 596253))))) false))
 
 (deftest solve-puzzle
-;  (let [input (slurp "resources/day02.txt")]
-;    (is (= (part-1 input) 3409710))
+  (let [input (slurp "resources/day04.txt")]
+    (is (= (part-1 input) 1864))))
 ;    (is (= (part-2 input) 7912))))
