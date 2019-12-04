@@ -1,14 +1,8 @@
 (ns aoc-2019.day03
-  (:require [clojure.string :refer [split trim]]))
-
-(defn to-int [n]
-  (-> n str Integer/parseInt))
-
-(defn manhattan [a b]
-  "Calculate the Manhattan distance between two points"
-  (->> (map list a b)
-       (map #(Math/abs (apply - %)))
-       (reduce +)))
+  (:require
+    [aoc-2019.utils :refer [manhattan to-int]]
+    [clojure.set :refer [intersection]]
+    [clojure.string :refer [split split-lines trim]]))
 
 (defn move [direction]
   (let [m {:U #(vector %1 (inc %2))
@@ -25,3 +19,24 @@
     (->> start (iterate (move d))
                (rest)
                (take times))))
+
+(defn full-path [p start]
+  (loop [parts (apply list (split p #"\,"))
+         full  (list start)]
+    (if (empty? parts)
+      (rest full)
+      (recur (rest parts)
+             (concat full (path (first parts)
+                          (last full)))))))
+
+(defn closest-cross [a b]
+  (->> [a b] (map #(set (full-path % [0 0])))
+             (apply intersection)
+             (map (partial manhattan [0 0]))
+             (apply min)))
+
+(defn part-1 [input]
+  (->> input (trim)
+             (split-lines)
+             (map trim)
+             (apply closest-cross)))
