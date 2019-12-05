@@ -38,6 +38,6 @@
   (let [[from to] (parse-input input)]
     (->> to (inc)
             (range from)
-            (map #(-> % strip-larger-groups password?))
+            (map #(password? (strip-larger-groups %)))
             (filter true?)
             (count))))

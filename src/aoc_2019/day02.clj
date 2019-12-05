@@ -30,4 +30,4 @@
         t #((s (quot % 100) (mod % 100)) 0)]
     (->> (range 0 9999)
          (filter #(= (t %) 19690720))
-         first)))
+         (first))))
