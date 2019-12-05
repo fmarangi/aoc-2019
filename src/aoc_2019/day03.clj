@@ -12,7 +12,7 @@
     (partial apply (m direction))))
 
 (defn step [s]
-  (vector (keyword (subs s 0 1)) (to-int (subs s 1))))
+  (list (keyword (subs s 0 1)) (to-int (subs s 1))))
 
 (defn path [p start]
   (let [[d times] (step p)]
@@ -35,8 +35,23 @@
              (map (partial manhattan [0 0]))
              (apply min)))
 
+(defn shortest-path [a b]
+  (let [paths (map #(full-path % [0 0]) [a b])
+        cross (->> paths (map set) (apply intersection))
+        steps (for [p paths] (map #(.indexOf p %) cross))]
+    (->> steps (apply map (partial list))
+               (map #(apply + %))
+               (apply min)
+               (+ 2))))
+
 (defn part-1 [input]
   (->> input (trim)
              (split-lines)
              (map trim)
              (apply closest-cross)))
+
+(defn part-2 [input]
+  (->> input (trim)
+             (split-lines)
+             (map trim)
+             (apply shortest-path)))
