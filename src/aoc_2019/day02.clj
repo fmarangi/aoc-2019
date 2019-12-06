@@ -4,12 +4,10 @@
 (defn- parse-input [x]
   (mapv #(Integer/parseInt %) (split x #",")))
 
-(defn intcode [program current]
-  (let [a  (program (+ current 1))
-        b  (program (+ current 2))
-        c  (program (+ current 3))
-        op ({1 + 2 *} (program current))]
-    (assoc program c (op (program a) (program b)))))
+(defn intcode [program curr]
+  (let [[a b c d] (subvec program curr (+ curr 4))
+        op ({1 + 2 *} a)]
+    (assoc program d (op (program b) (program c)))))
 
 (defn run-program [program]
   (loop [i 0 p program]

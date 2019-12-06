@@ -4,6 +4,7 @@
   (-> x str Integer/parseInt))
 
 (defn digits [x]
+  "Split number in digits"
   (->> x (iterate #(quot % 10))
          (take-while pos?)
          (map #(mod % 10))))
