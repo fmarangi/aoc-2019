@@ -6,30 +6,32 @@
 (defn parse-input [x]
   (mapv to-int (split (trim x) #",")))
 
-(defn intcode [program curr]
+(defn intcode [program curr v]
   (let [mode (vector program identity)
-        ops {1 + 2 *}
+        ops {1 +
+             2 *
+             7 #(if (< %1 %2) 1 0)
+             8 #(if (= %1 %2) 1 0)}
         [a _ b c] (->> curr (program) (digits))
         [b c] (map #(mode (or % 0)) [b c])]
     (case a
-      3 (assoc program (program (inc curr)) 1)
+      3 (vector (+ curr 2) (assoc program (program (inc curr)) v))
       4 (let [v (->> curr (inc) (program) (b))]
           (if-not (zero? v) (println v))
-          (identity program))
+          (vector (+ curr 2) program))
       (let [[x y z] (subvec program (+ curr 1) (+ curr 4))
             res ((ops a) (b x) (c y))]
-        (assoc program z res)))))
+        (vector (+ curr 4) (assoc program z res))))))
 
-(defn run-program [program]
-  (loop [i 0 p program]
+(defn run-program [program v]
+  (loop [[i p] [0 program]]
     (if (= (p i) 99)
       p
-      (let [op (mod (p i) 20) s ({1 4 2 4 3 2 4 2} op)]
-        (recur (+ i s) (intcode p i))))))
+      (recur (intcode p i v)))))
 
 (defn part-1 [input]
-  (->> input (parse-input)
-             (run-program)
-             (with-out-str)
-             (trim)
-             (to-int)))
+  (-> input (parse-input)
+            (run-program 1)
+            (with-out-str)
+            (trim)
+            (to-int)))
