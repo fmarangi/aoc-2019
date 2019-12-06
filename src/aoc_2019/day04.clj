@@ -1,15 +1,10 @@
 (ns aoc-2019.day04
   (:require
-    [aoc-2019.utils :refer [to-int]]
+    [aoc-2019.utils :refer [digits to-int]]
     [clojure.string :refer [split trim]]))
 
 (defn- parse-input [input]
   (map to-int (split (trim input) #"-")))
-
-(defn digits [x]
-  (->> x (iterate #(quot % 10))
-         (take-while pos?)
-         (map #(mod % 10))))
 
 (defn doubles? [d]
   (let [pairs (partition 2 (interleave (butlast d) (rest d)))]
