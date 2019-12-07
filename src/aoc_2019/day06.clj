@@ -47,4 +47,4 @@
   (checksum input :COM))
 
 (defn part-2 [input]
-  (dec( orbital-transfers input :YOU :SAN)))
+  (-> input (orbital-transfers :YOU :SAN) (dec)))
