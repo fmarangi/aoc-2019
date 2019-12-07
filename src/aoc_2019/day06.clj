@@ -6,8 +6,8 @@
   (assoc planets a (conj (get planets a ()) b)))
 
 (defn- add-both [planets [a b]]
-    (reduce into planets [{a (conj (get planets a #{}) b)}
-                          {b (conj (get planets b #{}) a)}]))
+  (reduce into planets [{a (conj (get planets a #{}) b)}
+                        {b (conj (get planets b #{}) a)}]))
 
 (defn space-map [input]
   (let [rel  #(map keyword (split % #"\)"))
