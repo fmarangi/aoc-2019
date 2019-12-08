@@ -14,3 +14,11 @@
   (->> (map list a b)
        (map #(Math/abs (apply - %)))
        (reduce +)))
+
+(defn combinations [items]
+  (let [[a b] (split-at 1 items)
+        c (inc (count b))
+        k (fn [l] (reduce conj () (map #(let [[x y] (split-at % l)] (concat x a y)) (range c))))]
+    (if (empty? b)
+      (list a)
+      (reduce concat () (map k (combinations b))))))
