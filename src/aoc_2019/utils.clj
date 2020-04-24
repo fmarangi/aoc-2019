@@ -22,3 +22,8 @@
     (if (empty? b)
       (list a)
       (reduce concat () (map k (combinations b))))))
+
+(defn angle [a b]
+  (->> [b a] (apply map list)
+             (map (partial apply -))
+             (apply #(Math/atan2 %2 %1))))
