@@ -9,7 +9,7 @@
          (map first)))
 
 (defn normalize-angle [a]
-  (mod (+ a (* Math/PI 0.5)) (* Math/PI 2)))
+  (mod (+ a (/ Math/PI 2)) (* Math/PI 2)))
 
 (defn parse-input [input]
   (->> input (trim)
@@ -29,18 +29,19 @@
   (->> a (detected) (vals) (apply max)))
 
 (defn vaporize [a n]
-  (let [b (key (apply max-key val (detected a)))
-        t (->> a (remove #{b})
-                 (map (juxt identity (partial manhattan b)))
-                 (sort-by second)
-                 (map first)
-                 (group-by #(normalize-angle (angle b %)))
-                 (into (sorted-map))
-                 (vals)
-                 (apply interleave)
-                 (take n)
-                 (last))]
-    (+ (* (first t) 100) (second t))))
+  (let [best (key (apply max-key val (detected a)))
+        calc (fn [[x y]] (+ (* x 100) y))]
+    (->> a (remove #{best})
+           (map (juxt identity (partial manhattan best)))
+           (sort-by second)
+           (map first)
+           (group-by #(normalize-angle (angle best %)))
+           (into (sorted-map))
+           (vals)
+           (apply interleave)
+           (take n)
+           (last)
+           (calc))))
 
 (defn part-1 [input]
   (best-location (parse-input input)))

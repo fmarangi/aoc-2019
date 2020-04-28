@@ -1,5 +1,8 @@
 (ns aoc-2019.utils)
 
+(defn abs [x]
+  (max (- x) x))
+
 (defn to-int [x]
   (-> x str Integer/parseInt))
 
@@ -11,8 +14,7 @@
 
 (defn manhattan [a b]
   "Calculate the Manhattan distance between two points"
-  (->> (map list a b)
-       (map #(Math/abs (apply - %)))
+  (->> (map (comp abs (partial apply -) list) a b)
        (reduce +)))
 
 (defn combinations [items]
@@ -24,6 +26,5 @@
       (reduce concat () (map k (combinations b))))))
 
 (defn angle [a b]
-  (->> [b a] (apply map list)
-             (map (partial apply -))
+  (->> [b a] (apply map (comp (partial apply -) list))
              (apply #(Math/atan2 %2 %1))))
