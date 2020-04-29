@@ -5,10 +5,11 @@
     [aoc-2019.day10 :refer :all]))
 
 (deftest calc-normalized-angle
-  (is (= (normalize-angle (angle [11 13] [11 12])) 0.0))
-  (is (= (normalize-angle (angle [11 13] [11 14])) Math/PI))
-  (is (= (normalize-angle (angle [11 13] [12 13])) (* Math/PI 0.5)))
-  (is (= (normalize-angle (angle [11 13] [10 13])) (* Math/PI 1.5))))
+  (are [ang exp] (= (normalize-angle ang) exp)
+    (angle [11 13] [11 12]) 0.0
+    (angle [11 13] [11 14]) Math/PI
+    (angle [11 13] [12 13]) (* Math/PI 0.5)
+    (angle [11 13] [10 13]) (* Math/PI 1.5)))
 
 (deftest calc-detected-asteroids
   (is (= (best-location (parse-input ".#..#

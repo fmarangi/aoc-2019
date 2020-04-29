@@ -28,9 +28,11 @@
 (defn best-location [a]
   (->> a (detected) (vals) (apply max)))
 
+(defn result [x y]
+  (+ (* x 100) y))
+
 (defn vaporize [a n]
-  (let [best (key (apply max-key val (detected a)))
-        calc (fn [[x y]] (+ (* x 100) y))]
+  (let [best (key (apply max-key val (detected a)))]
     (->> a (remove #{best})
            (map (juxt identity (partial manhattan best)))
            (sort-by second)
@@ -39,9 +41,9 @@
            (into (sorted-map))
            (vals)
            (apply interleave)
-           (take n)
-           (last)
-           (calc))))
+           (drop (dec n))
+           (first)
+           (apply result))))
 
 (defn part-1 [input]
   (best-location (parse-input input)))
