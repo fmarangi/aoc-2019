@@ -28,3 +28,16 @@
 (defn angle [a b]
   (->> [b a] (apply map (comp (partial apply -) list))
              (apply #(Math/atan2 %2 %1))))
+
+(defn a* [from to next]
+  "Find path between two points"
+  (loop [routes [[from #{from}]]]
+    (if-not (empty? routes)
+      (let [[tile path] (first routes)]
+        (if (= tile to)
+          path
+          (->> (next tile)
+               (filter (complement path))
+               (map (juxt identity #(conj path %)))
+               (apply conj (subvec routes 1))
+               (recur)))))))

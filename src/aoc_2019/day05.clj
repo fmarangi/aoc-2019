@@ -1,20 +1,18 @@
 (ns aoc-2019.day05
   (:require
+    [aoc-2019.intcode :refer [parse-input]]
     [aoc-2019.utils :refer [digits to-int]]
-    [clojure.string :refer [split trim]]))
-
-(defn parse-input [x]
-  (mapv to-int (split (trim x) #",")))
+    [clojure.string :refer [trim]]))
 
 (defn intcode [program curr v]
-  (let [mode (vector program identity)
+  (let [mode [program identity]
         ops {1 +
              2 *
              7 #(if (< %1 %2) 1 0)
              8 #(if (= %1 %2) 1 0)}
-        [a _ b c] (->> curr (program) (digits))
+        [a _ b c] (digits (program curr))
         [b c] (map #(mode (or % 0)) [b c])]
-    (case a
+    (case (int a)
       3 (vector (+ curr 2) (assoc program (program (+ curr 1)) v))
 
       4 (let [v (b (program (+ curr 1)))]

@@ -1,13 +1,12 @@
 (ns aoc-2019.day02
-  (:require [clojure.string :refer [split trim]]))
-
-(defn- parse-input [x]
-  (mapv #(Integer/parseInt %) (split x #",")))
+  (:require
+    [aoc-2019.intcode :refer [parse-input]]
+    [clojure.string :refer [trim]]))
 
 (defn intcode [program curr]
   (let [[a b c d] (subvec program curr (+ curr 4))
-        op ({1 + 2 *} a)]
-    (assoc program d (op (program b) (program c)))))
+        op        ({1 + 2 *} a)]
+    (assoc program d (apply op (map program [b c])))))
 
 (defn run-program [program]
   (loop [i 0 p program]
