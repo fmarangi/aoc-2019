@@ -16,6 +16,6 @@
   (is (= (fuel 100756) 50346)))
 
 (deftest solve-puzzle
-  (let [input (slurp "resources/day01.txt")]
+  (let [input (slurp "resources/2019/day01.txt")]
     (is (= (part-1 input) 3381405))
     (is (= (part-2 input) 5069241))))

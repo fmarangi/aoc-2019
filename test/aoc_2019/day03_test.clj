@@ -32,6 +32,6 @@
                         "U98,R91,D20,R16,D67,R40,U7,R15,U6,R7") 410)))
 
 (deftest solve-puzzle
-  (let [input (slurp "resources/day03.txt")]
+  (let [input (slurp "resources/2019/day03.txt")]
     (is (= (part-1 input) 232))
     (is (= (part-2 input) 6084))))

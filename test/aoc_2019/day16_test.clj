@@ -16,6 +16,6 @@
   (is (= (bottom-up "03081770884921959731165446850517" 100) "53553731")))
 
 (deftest solve-puzzle
-  (let [input (trim (slurp "resources/day16.txt"))]
+  (let [input (trim (slurp "resources/2019/day16.txt"))]
     ;(is (= (part-2 input) "36265589"))
     (is (= (part-1 input) "27831665"))))

@@ -94,6 +94,6 @@
 ###.##.####.##.#..##") 200) 802)))
 
 (deftest solve-puzzle
-  (let [input (slurp "resources/day10.txt")]
+  (let [input (slurp "resources/2019/day10.txt")]
     (is (= (part-1 input) 284))
     (is (= (part-2 input) 404))))

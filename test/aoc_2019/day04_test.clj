@@ -15,6 +15,6 @@
   (is (= (strip-larger-groups 111122) 122)))
 
 (deftest solve-puzzle
-  (let [input (slurp "resources/day04.txt")]
+  (let [input (slurp "resources/2019/day04.txt")]
     (is (= (part-1 input) 1864))
     (is (= (part-2 input) 1258))))

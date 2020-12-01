@@ -32,6 +32,6 @@ K)YOU
 I)SAN" :YOU :SAN)) 4))
 
 (deftest solve-puzzle
-  (let [input (slurp "resources/day06.txt")]
+  (let [input (slurp "resources/2019/day06.txt")]
     (is (= (part-1 input) 621125))
     (is (= (part-2 input) 550))))
