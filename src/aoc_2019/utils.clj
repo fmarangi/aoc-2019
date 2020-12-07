@@ -1,4 +1,10 @@
-(ns aoc-2019.utils)
+(ns aoc-2019.utils
+  (:require
+    [clojure.java.io :refer [resource]]
+    [clojure.string :refer [trim]]))
+
+(defn puzzle-input [path]
+  (trim (slurp (resource path))))
 
 (defn abs [x]
   (max (- x) x))
