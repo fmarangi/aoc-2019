@@ -1,7 +1,6 @@
 (ns aoc-2019.day02
   (:require
-    [aoc-2019.intcode :refer [parse-input]]
-    [clojure.string :refer [trim]]))
+    [aoc-2019.intcode :refer [parse-program]]))
 
 (defn intcode [program curr]
   (let [[a b c d] (subvec program curr (+ curr 4))
@@ -15,7 +14,7 @@
       (recur (+ i 4) (intcode p i)))))
 
 (defn- solver [input]
-  (let [i (parse-input (trim input))]
+  (let [i (parse-program  input)]
     (fn [noun verb]
       (run-program (assoc i 1 noun 2 verb)))))
 
