@@ -22,21 +22,13 @@
         [a b c] (map param (range (inc pos) (+ pos 4)) (modes opcode))]
     (case (mod opcode 100)
       1 [(safe-assoc intcode c (+ (value a) (value b))) input output (+ pos 4) relative-base]
-
       2 [(safe-assoc intcode c (* (value a) (value b))) input output (+ pos 4) relative-base]
-
       3 [(safe-assoc intcode a (first input)) (rest input) output (+ pos 2) relative-base]
-
       4 [intcode input (conj output (value a)) (+ pos 2) relative-base]
-
       5 [intcode input output (if (zero? (value a)) (+ pos 3) (value b)) relative-base]
-
       6 [intcode input output (if (zero? (value a)) (value b) (+ pos 3)) relative-base]
-
       7 [(safe-assoc intcode c (if (< (value a) (value b)) 1 0)) input output (+ pos 4) relative-base]
-
       8 [(safe-assoc intcode c (if (= (value a) (value b)) 1 0)) input output (+ pos 4) relative-base]
-
       9 [intcode input output (+ pos 2) (+ relative-base (value a))])))
 
 (defn parse-program [x]
