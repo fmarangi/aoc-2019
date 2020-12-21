@@ -15,7 +15,7 @@
 (defn- validation-pattern [rules rule]
   (let [vp (fn [r] (let [k (rules r)] (if (string? k) k (validation-pattern rules r))))
         rp (map #(apply str (map vp %)) (rules rule))]
-    (str "(?:" (apply str (interpose "|" rp)) ")")))
+    (str "(?:" (s/join "|" rp) ")")))
 
 (defn parse-input [input]
   (let [[rules messages] (s/split input #"\n\n")
