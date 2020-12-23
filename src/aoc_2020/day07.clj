@@ -1,11 +1,9 @@
-(ns aoc-2020.day07
-  (:require
-    [aoc-2019.utils :refer [to-int]]))
+(ns aoc-2020.day07)
 
 (defn parse-group [group]
   (->> (re-seq #"(\d) (.*?) bags?" group)
        (map rest)
-       (map (juxt second (comp to-int first)))
+       (map (juxt second (comp read-string first)))
        (into {})))
 
 (defn parse-input [input]

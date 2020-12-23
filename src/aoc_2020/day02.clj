@@ -1,32 +1,28 @@
 (ns aoc-2020.day02
   (:require
-    [aoc-2019.utils :refer [to-int]]
     [clojure.string :refer [split split-lines trim]]))
 
 (defn valid-password [policy password]
   (let [[times letter] (split policy #" ")
-        [from to] (map to-int (split times #"-"))
-        qty ((frequencies password) (first letter) 0)]
+        [from to]      (map read-string (split times #"-"))
+        qty            ((frequencies password) (first letter) 0)]
     (and (>= qty from) (<= qty to))))
 
 (defn valid-toboggan-password [policy password]
   (let [[times letter] (split policy #" ")]
     (->> (split times #"-")
-         (map (comp (partial get password) dec to-int))
+         (map (comp (partial get password) dec read-string))
          (map (partial = (first letter)))
-         (apply =)
-         (not))))
+         (apply not=))))
+
+(defn- solve-with [input f]
+  (->> (split-lines (trim input))
+       (map #(split % #": "))
+       (filter (partial apply f))
+       (count)))
 
 (defn part-1 [input]
-  (->> (trim input)
-       (split-lines)
-       (map #(split % #": "))
-       (filter (partial apply valid-password))
-       (count)))
+  (solve-with input valid-password))
 
 (defn part-2 [input]
-  (->> (trim input)
-       (split-lines)
-       (map #(split % #": "))
-       (filter (partial apply valid-toboggan-password))
-       (count)))
+  (solve-with input valid-toboggan-password))

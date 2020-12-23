@@ -1,10 +1,9 @@
 (ns aoc-2020.day04
   (:require
-    [aoc-2019.utils :refer [to-int]]
     [clojure.string :refer [split]]))
 
 (defn between [from to]
-  (fn [x] (and (>= (to-int x) from) (<= (to-int x) to))))
+  (fn [x] (let [y (read-string x)] (and (<= from y) (>= to y)))))
 
 (defn matches [pattern]
   (fn [x] (some? (re-matches pattern x))))

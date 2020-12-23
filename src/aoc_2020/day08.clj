@@ -1,12 +1,11 @@
 (ns aoc-2020.day08
   (:require
-    [aoc-2019.utils :refer [to-int]]
     [clojure.string :refer [split split-lines]]))
 
 (defn parse-input [input]
   (->> (split-lines input)
        (map #(split % #" "))
-       (mapv (juxt first (comp to-int second)))))
+       (mapv (juxt first (comp read-string second)))))
 
 (defn run-instruction [bootcode pos acc]
   (let [[cmd val] (bootcode pos)]
