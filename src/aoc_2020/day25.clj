@@ -1,6 +1,5 @@
 (ns aoc-2020.day25
-  (:require
-    [clojure.string :as s]))
+  (:require [clojure.string :as s]))
 
 (defn transform [subject]
   (fn [n] (mod (* n subject) 20201227)))

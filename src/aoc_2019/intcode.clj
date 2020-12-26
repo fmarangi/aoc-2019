@@ -1,6 +1,5 @@
 (ns aoc-2019.intcode
-  (:require
-    [clojure.string :refer [split trim]]))
+  (:require [clojure.string :as s]))
 
 (defn modes [x]
   (map #(mod (quot x %) 10) [100 1000 10000]))
@@ -15,7 +14,7 @@
   (let [target (if (< key (count target)) target (mapv #(get target % 0) (range key)))]
     (assoc target key val)))
 
-(defn- run-intcode [intcode input output pos relative-base]
+(defn run-intcode [intcode input output pos relative-base]
   (let [opcode  (intcode pos)
         param   (partial get-param intcode relative-base)
         value   (fn [x] (get intcode x 0))
@@ -32,7 +31,7 @@
       9 [intcode input output (+ pos 2) (+ relative-base (value a))])))
 
 (defn parse-program [x]
-  (mapv read-string (split (trim x) #",")))
+  (mapv read-string (s/split (s/trim x) #",")))
 
 (defn run-program
   ([intcode] (run-program intcode []))

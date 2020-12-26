@@ -1,7 +1,6 @@
 (ns aoc-2019.day20
-  (:require
-    [aoc-2019.utils :refer [a*]]
-    [clojure.string :refer [index-of trim]]))
+  (:require [aoc-2019.utils :refer [bfs]]
+            [clojure.string :refer [index-of trim]]))
 
 (def one-level 1000000)
 
@@ -27,13 +26,13 @@
            (first)))))
 
 (defn teleport [portals]
-  (->> portals (filter (comp not #{"AA" "ZZ"} first))
-               (group-by first)
-               (vals)
-               (map #(map second %))
-               (map (juxt identity reverse))
-               (flatten)
-               (apply hash-map)))
+  (->> (filter (comp not #{"AA" "ZZ"} first) portals)
+       (group-by first)
+       (vals)
+       (map #(map second %))
+       (map (juxt identity reverse))
+       (flatten)
+       (apply hash-map)))
 
 (defn teleport-to-level [portals outer]
   (->> (teleport portals)
@@ -51,9 +50,10 @@
         offsets     (list 1 -1 line-length (- line-length))
         valid?      (valid-tile maze)
         teleports   (teleport portals)]
-    (fn [p] (->> (map (partial + p) offsets)
-                 (concat (list (teleports p)))
-                 (filter (every-pred some? valid?))))))
+    (fn [p]
+      (->> (map (partial + p) offsets)
+           (concat (list (teleports p)))
+           (filter (every-pred some? valid?))))))
 
 (defn is-outer? [maze]
   (let [l  (inc (index-of maze \newline))
@@ -68,7 +68,8 @@
         valid?      (valid-tile maze)
         teleports   (teleport-to-level portals (is-outer? maze))]
     (fn [p]
-      (let [current-level (quot p one-level) p (mod p one-level)]
+      (let [current-level (quot p one-level)
+            p             (mod p one-level)]
         (if (> current-level max-level)
           (list)
           (->> (map (partial + p) offsets)
@@ -82,12 +83,14 @@
     (map p ["AA" "ZZ"])))
 
 (defn find-path [maze]
-  (let [ports (portals maze) [from to] (from-to ports)]
-    (a* from to (next-step maze ports))))
+  (let [ports     (portals maze)
+        [from to] (from-to ports)]
+    (bfs from to (next-step maze ports))))
 
 (defn find-path-with-levels [maze]
-  (let [ports (portals maze) [from to] (from-to ports)]
-    (a* from to (next-step-with-levels maze ports 25))))
+  (let [ports     (portals maze)
+        [from to] (from-to ports)]
+    (bfs from to (next-step-with-levels maze ports 25))))
 
 (defn part-1 [input]
   (dec (count (find-path input))))

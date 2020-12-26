@@ -1,8 +1,6 @@
 (ns aoc-2019.day20-test
-  (:require
-    [aoc-2019.utils :refer [a*]]
-    [aoc-2019.day20 :refer :all]
-    [clojure.test :refer :all]))
+  (:require [aoc-2019.day20 :refer :all]
+            [clojure.test :refer :all]))
 
 (deftest test-find-path
   (are [actual expected] (= (dec (count actual)) expected)
