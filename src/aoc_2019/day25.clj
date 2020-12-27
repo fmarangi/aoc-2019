@@ -46,7 +46,7 @@
     (let [opcode (mod (c p) 100)]
       (cond
         (= opcode 99)                 (println (apply str (map char o)))
-        (and (= opcode 4) (empty? i)) (do
+        (and (= opcode 3) (empty? i)) (do
                                         (println (reduce str (map char o)))
                                         (recur (run-intcode c (mapv int (str (read-line) "\n")) [] p r)))
         :else                         (recur (run-intcode c i o p r))))))
