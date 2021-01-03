@@ -1,6 +1,9 @@
 (ns aoc-2019.intcode
   (:require [clojure.string :as s]))
 
+(defn commands [& cmd]
+  (mapv int (str (s/join "\n" cmd) "\n")))
+
 (defn modes [x]
   (map #(mod (quot x %) 10) [100 1000 10000]))
 
