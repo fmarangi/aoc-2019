@@ -39,7 +39,7 @@
   (shuffle-deck input 10007 2019))
 
 ; Observations
-; - after 1 round, each cards moved x steps (multiplier) + offset forward
+; - after 1 round, each cards moved its initial position * steps (multiplier) + offset forward
 ; - after n rounds, the position multiplier is (multiplier ^ n) % cards, eg. 1688 7356 8248 2887 9854 for the test deck
 ; - the offset increases in a geometric series mod cards, see https://en.wikipedia.org/wiki/Geometric_series
 ; - the offset calculation is slightly different than a geomtric sum:
