@@ -20,4 +20,4 @@ jobs:
         run: lein deps
 
       - name: Run tests
-        run: lein test
+        run: lein test test/aoc_2021/*
