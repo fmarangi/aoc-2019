@@ -11,14 +11,7 @@
          (map (partial apply str))
          (s/join "\n"))))
 
-(defn flip-h [image]
-  "Flip an ASCII image horizontally"
-  (->> (s/split-lines image)
-       (map reverse)
-       (map (partial apply str))
-       (s/join "\n")))
-
-(defn flip-v [image]
+(defn flip [image]
   "Flip an ASCII image vertically"
   (->> (s/split-lines image)
        (reverse)
@@ -36,5 +29,5 @@
 (defn all-directions [image]
   "Rotate and flip an ASCII image in all possible ways"
   (for [r (take 4 (iterate rotate image))
-        v (list identity flip-h flip-v)]
+        v (list identity flip)]
     (v r)))
